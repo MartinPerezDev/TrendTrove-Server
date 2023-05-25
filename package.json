@@ -1,0 +1,13 @@
+{
+  "name": "api-trend-trove",
+  "version": "1.0.0",
+  "description": "TrendTrove is a robust and scalable RESTful API that powers a fashion-centric eCommerce platform",
+  "main": "src/App.js",
+  "scripts": {
+    "start": "node src/App.js",
+    "dev": "nodemon src/App.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
