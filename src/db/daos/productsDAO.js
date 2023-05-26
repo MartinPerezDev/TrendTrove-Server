@@ -54,6 +54,4 @@ class ProductDAO {
   }
 }
 
-const productsDAO = new ProductDAO()
-
-module.exports = productsDAO
+module.exports = ProductDAO
