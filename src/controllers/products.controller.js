@@ -1,8 +1,8 @@
-const ProductDAO = require('../daos/products.dao')
+const ProductsDAO = require('../db/daos/productsDAO')
 
 class ProductsController {
   constructor () {
-    this.schema = new ProductDAO()
+    this.products = new ProductsDAO()
   }
 
   handleResponde (res, status, message, data = {}) {
@@ -11,7 +11,7 @@ class ProductsController {
 
   getProducts = async (req, res) => {
     try {
-      const products = await this.schema.get()
+      const products = await this.products.get()
       this.handleResponde(res, 200, 'get all products', products)
     } catch (error) {
       this.handleResponde(res, 500, error.message)
@@ -21,7 +21,7 @@ class ProductsController {
   getProductById = async (req, res) => {
     try {
       const { id } = req.params
-      const product = await this.schema.getById(id)
+      const product = await this.products.getById(id)
       product
         ? this.handleResponde(res, 200, 'get product by id', product)
         : this.handleResponde(res, 404, 'product not found')
@@ -33,7 +33,7 @@ class ProductsController {
   getProductsByCategory = async (req, res) => {
     try {
       const { category } = req.params
-      const products = await this.schema.getByCategory(category)
+      const products = await this.products.getByCategory(category)
       products
         ? this.handleResponde(res, 200, 'get products by category', products)
         : this.handleResponde(res, 404, 'products not found')
@@ -44,7 +44,7 @@ class ProductsController {
 
   addProduct = async (req, res) => {
     try {
-      const product = await this.schema.add(req.body)
+      const product = await this.products.add(req.body)
       this.handleResponde(res, 201, 'product added', product)
     } catch (error) {
       this.handleResponde(res, 500, error.message)
@@ -54,7 +54,7 @@ class ProductsController {
   updateProduct = async (req, res) => {
     try {
       const { id } = req.params
-      const product = await this.schema.update(id, req.body)
+      const product = await this.products.update(id, req.body)
       product
         ? this.handleResponde(res, 200, 'product updated', product)
         : this.handleResponde(res, 404, 'product not found')
@@ -66,7 +66,7 @@ class ProductsController {
   deleteProduct = async (req, res) => {
     try {
       const { id } = req.params
-      const product = await this.schema.delete(id)
+      const product = await this.products.delete(id)
       product
         ? this.handleResponde(res, 200, 'product deleted', product)
         : this.handleResponde(res, 404, 'product not found')

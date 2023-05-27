@@ -1,9 +1,6 @@
 const mongoose = require('mongoose')
 
 const ProductSchema = new mongoose.Schema({
-  id: mongoose.Schema.Types.ObjectId,
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now },
   name: { type: String, required: true },
   description: { type: String, required: true },
   category: { type: [String], required: true },
@@ -14,7 +11,9 @@ const ProductSchema = new mongoose.Schema({
     image: [String],
     size: [String]
   }]
-})
+},
+{ timestamps: true }
+)
 
 const productSchema = mongoose.model('products', ProductSchema)
 

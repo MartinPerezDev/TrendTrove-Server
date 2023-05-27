@@ -1,6 +1,6 @@
-const productSchema = require('../db/models/product.model')
+const productSchema = require('../models/product.model')
 
-class ProductDAO {
+class ProductsDAO {
   constructor () {
     this.schema = productSchema
   }
@@ -39,7 +39,7 @@ class ProductDAO {
 
   async update (id, product) {
     try {
-      return await this.schema.findByIdAndUpdate(id, product)
+      return await this.schema.findByIdAndUpdate(id, product, { new: true })
     } catch (error) {
       throw new Error('Error updating product')
     }
@@ -54,4 +54,4 @@ class ProductDAO {
   }
 }
 
-module.exports = ProductDAO
+module.exports = ProductsDAO
