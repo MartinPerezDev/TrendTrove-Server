@@ -3,20 +3,13 @@ const productsRouter = express.Router()
 const ProductsController = require('../controllers/products.controller')
 
 const productsController = new ProductsController()
-const {
-  getProducts,
-  getProductById,
-  getProductsByCategory,
-  addProduct,
-  updateProduct,
-  deleteProduct
-} = productsController
+const { getAll, getById, addOne, updateOne, deleteOne, getByCategory } = productsController
 
-productsRouter.get('/', getProducts)
-productsRouter.get('/:id', getProductById)
-productsRouter.get('/category/:category', getProductsByCategory)
-productsRouter.post('/', addProduct)
-productsRouter.put('/:id', updateProduct)
-productsRouter.delete('/:id', deleteProduct)
+productsRouter.get('/', getAll)
+productsRouter.get('/:id', getById)
+productsRouter.get('/category/:category', getByCategory)
+productsRouter.post('/', addOne)
+productsRouter.put('/:id', updateOne)
+productsRouter.delete('/:id', deleteOne)
 
 module.exports = productsRouter
