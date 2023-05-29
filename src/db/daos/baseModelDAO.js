@@ -8,7 +8,7 @@ class BaseModelDAO {
     try {
       return await this.schema.find()
     } catch (error) {
-      throw new Error(`Error getting ${this.nameSchema}`)
+      throw new Error(`Error getting ${this.nameSchema} - ${error.message}`)
     }
   }
 
@@ -16,7 +16,7 @@ class BaseModelDAO {
     try {
       return await this.schema.findById(id)
     } catch (error) {
-      throw new Error(`Error getting ${this.nameSchema} by id`)
+      throw new Error(`Error getting ${this.nameSchema} by id - ${error.message}`)
     }
   }
 
@@ -24,7 +24,7 @@ class BaseModelDAO {
     try {
       return await this.schema.create(item)
     } catch (error) {
-      throw new Error(`Error adding ${this.nameSchema}`)
+      throw new Error(`Error adding ${this.nameSchema} - ${error.message}`)
     }
   }
 
@@ -32,7 +32,7 @@ class BaseModelDAO {
     try {
       return await this.schema.findByIdAndUpdate(id, item, { new: true })
     } catch (error) {
-      throw new Error(`Error updating ${this.nameSchema}`)
+      throw new Error(`Error updating ${this.nameSchema} - ${error.message}`)
     }
   }
 
@@ -40,7 +40,7 @@ class BaseModelDAO {
     try {
       return await this.schema.findByIdAndDelete(id)
     } catch (error) {
-      throw new Error(`Error deleting ${this.nameSchema}`)
+      throw new Error(`Error deleting ${this.nameSchema} - ${error.message}`)
     }
   }
 }

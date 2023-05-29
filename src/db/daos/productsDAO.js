@@ -10,7 +10,7 @@ class ProductsDAO extends BaseModelDAO {
     try {
       return await this.schema.find({ category })
     } catch (error) {
-      throw new Error('Error getting product by category')
+      throw new Error(`Error getting ${this.nameSchema} by category - ${error.message}`)
     }
   }
 }
