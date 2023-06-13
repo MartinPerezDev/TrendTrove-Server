@@ -1,38 +1,44 @@
 const mongoose = require('mongoose')
+const productSchema = require('./product.model')
 
-const variantSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  price: { type: Number, required: true },
-  image: { type: String, required: true },
-  size: { type: String, required: true },
-  quantity: { type: Number, required: true }
+const ExtendedProductSchema = new mongoose.Schema({
+  ...productSchema.schema.tree,
+  variants: {
+    ...productSchema.schema.tree.variants,
+    type: [{
+      ...productSchema.schema.tree.variants.type[0].obj,
+      quantity: { type: Number, required: true }
+    }]
+  },
+  total: { type: Number, required: true }
 })
 
-const productSchema = new mongoose.Schema({
+const PartialUserSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  description: { type: String, required: true },
-  category: { type: [String], required: true },
-  variants: {
-    type: [variantSchema],
-    validate: {
-      validator: function (variants) {
-        return variants.length > 0
-      },
-      message: 'Product must have at least one variant'
-    }
-  },
-  price: { type: Number, required: true }
+  email: { type: String, required: true },
+  shippingAddress: { type: String, required: true }
 })
 
 const OrderSchema = new mongoose.Schema({
   products: {
-    type: [productSchema],
+    type: [ExtendedProductSchema],
+    required: true,
     validate: {
       validator: function (products) {
         return products.length > 0
       },
       message: 'Order must have at least one product'
     }
+  },
+  user: {
+    type: [PartialUserSchema],
+    required: true,
+    validate: {
+      validator: function (userOptions) {
+        return userOptions.length > 1
+      }
+    },
+    message: 'Order must have a username and email user'
   }
 },
 { timestamps: true }
