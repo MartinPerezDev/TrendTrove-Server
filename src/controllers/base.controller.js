@@ -4,9 +4,7 @@ class BaseController {
     this.nameDao = this.constructor.name.replace('Controller', '').toLowerCase()
   }
 
-  handleResponse (res, status, message, data = {}) {
-    return res.status(status).json({ message, data })
-  }
+  handleResponse = (res, status, message, data = {}) => res.status(status).json({ message, data })
 
   getAll = async (req, res) => {
     try {
