@@ -1,4 +1,6 @@
 const UserDAO = require('../db/daos/usersDAO')
+const { passwordIsValid } = require('../utils/bcrypt')
+const { generateToken } = require('../utils/jwt')
 
 class UserController {
   constructor () {
@@ -17,6 +19,21 @@ class UserController {
       }
       const user = await this.dao.add(newUser)
       this.handleResponse(res, 201, 'User added', user)
+    } catch (error) {
+      this.handleResponse(res, 500, error.message)
+    }
+  }
+
+  loginUser = async (req, res) => {
+    try {
+      const { email, password } = req.body
+      const user = await this.dao.getByEmail(email)
+      if (!user) return this.handleResponse(res, 404, 'User not found')
+      if (!passwordIsValid(user, password)) return this.handleResponse(res, 401, 'Invalid password')
+      const payload = { id: user._id, name: user.name, email: user.email, isAdmin: user.isAdmin }
+      const token = generateToken(payload, process.env.JWT_SECRET_KEY)
+      const newUser = { ...payload, token }
+      this.handleResponse(res, 200, 'User logged', newUser)
     } catch (error) {
       this.handleResponse(res, 500, error.message)
     }
