@@ -1,6 +1,7 @@
 const UserDAO = require('../db/daos/usersDAO')
 const { passwordIsValid } = require('../utils/bcrypt')
 const { generateToken } = require('../utils/jwt')
+require('dotenv').config()
 
 class UserController {
   constructor () {
@@ -10,7 +11,7 @@ class UserController {
 
   handleResponse = (res, status, message, data = {}) => res.status(status).json({ message, data })
 
-  addUser = async (req, res) => {
+  signup = async (req, res) => {
     try {
       const newUser = {
         name: req.body.name,
@@ -24,7 +25,7 @@ class UserController {
     }
   }
 
-  loginUser = async (req, res) => {
+  login = async (req, res) => {
     try {
       const { email, password } = req.body
       const user = await this.dao.getByEmail(email)
