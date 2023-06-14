@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const variantSchema = require('./variant.product.model')
+const VariantSchema = require('./variant.product.model')
 
 const ProductSchema = new mongoose.Schema({
   name: { type: String, required: true },
@@ -15,7 +15,7 @@ const ProductSchema = new mongoose.Schema({
     }
   },
   variants: {
-    type: [variantSchema.schema],
+    type: [VariantSchema],
     required: true,
     validate: {
       validator: function (variants) {

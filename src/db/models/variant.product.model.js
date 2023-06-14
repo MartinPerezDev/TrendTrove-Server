@@ -25,6 +25,4 @@ const VariantSchema = new mongoose.Schema({
 },
 { timestamps: true })
 
-const variantSchema = mongoose.model('variants', VariantSchema)
-
-module.exports = variantSchema
+module.exports = VariantSchema
