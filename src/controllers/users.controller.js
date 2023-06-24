@@ -34,9 +34,10 @@ class UserController {
       const payload = { id: user._id, name: user.name, email: user.email, isAdmin: user.isAdmin }
       const token = generateToken(payload, process.env.JWT_SECRET_KEY)
       const newUser = { ...payload, token }
-      req.user.token = token
+      req.user = {...newUser}
       this.handleResponse(res, 200, 'User logged', newUser)
     } catch (error) {
+      console.log(error)
       this.handleResponse(res, 500, error.message)
     }
   }
