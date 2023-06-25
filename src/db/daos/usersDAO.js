@@ -1,7 +1,6 @@
 const userSchema = require('../models/user.model')
 
 const { createHash } = require('../../utils/bcrypt')
-const { verifyToken } = require('../../utils/jwt')
 
 class UserDAO {
   constructor () {
@@ -30,14 +29,6 @@ class UserDAO {
       return await this.schema.create(newUser)
     } catch (error) {
       throw new Error(`Error adding ${this.nameSchema} - ${error.message}`)
-    }
-  }
-
-  async getByToken (token) {
-    try {
-      return verifyToken(token, process.env.JWT_SECRET_KEY)
-    } catch (error) {
-      throw new Error('Error getting your token')
     }
   }
 }

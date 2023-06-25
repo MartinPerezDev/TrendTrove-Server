@@ -28,24 +28,21 @@ class UserController {
   login = async (req, res) => {
     try {
       const { email, password } = req.body
-      const user = await this.dao.getByEmail(email)
+      let user = await this.dao.getByEmail(email)
       if (!user) return this.handleResponse(res, 404, 'User not found')
       if (!passwordIsValid(user, password)) return this.handleResponse(res, 401, 'Invalid password')
       const payload = { id: user._id, name: user.name, email: user.email, isAdmin: user.isAdmin }
       const token = generateToken(payload, process.env.JWT_SECRET_KEY)
-      const newUser = { ...payload, token }
-      req.user = { ...newUser }
-      this.handleResponse(res, 200, 'User logged', newUser)
+      user = { ...payload, token }
+      this.handleResponse(res, 200, 'User logged', user)
     } catch (error) {
-      console.log(error)
       this.handleResponse(res, 500, error.message)
     }
   }
 
   getUserByToken = async (req, res) => {
     try {
-      const { token } = req.body
-      const user = await this.dao.getByToken(token)
+      const user = req.user
       if (!user) return this.handleResponse(res, 404, 'User not found')
       this.handleResponse(res, 200, 'User found', user)
     } catch (error) {
