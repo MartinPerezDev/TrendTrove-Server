@@ -36,21 +36,21 @@ const OrderSchema = new mongoose.Schema({
     }
   },
   user: {
-    type: { PartialUserSchema },
+    type: PartialUserSchema,
     required: true,
     validate: {
       validator: function (userOptions) {
-        return userOptions.length > 1
+        return userOptions !== null && typeof userOptions === 'object'
       }
     },
     message: 'Order must have a username, email and address of the user'
   },
   payment: {
-    type: { PaymentSchema },
+    type: PaymentSchema,
     required: true,
     validate: {
       validator: function (paymentOptions) {
-        return paymentOptions.length > 1
+        return paymentOptions !== null && typeof paymentOptions === 'object'
       }
     },
     message: 'Order must have a payment method, status and total'
