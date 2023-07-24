@@ -16,13 +16,15 @@ const PartialUserSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true },
   address: { type: String, required: true }
-})
+},
+{ _id: false })
 
 const PaymentSchema = new mongoose.Schema({
   method: { type: String, required: true },
   status: { type: String, required: true },
   total: { type: Number, required: true }
-})
+},
+{ _id: false })
 
 const OrderSchema = new mongoose.Schema({
   products: {
