@@ -1,22 +1,27 @@
 const mongoose = require('mongoose')
-const productSchema = require('./product.model')
 
 const ExtendedProductSchema = new mongoose.Schema({
-  ...productSchema.schema.tree,
-  variants: {
-    ...productSchema.schema.tree.variants,
-    type: [{
-      ...productSchema.schema.tree.variants.type[0].obj,
-      quantity: { type: Number, required: true }
-    }]
-  },
+  _id: { type: String, required: true },
+  _idVariant: { type: String, required: true },
+  name: { type: String, required: true },
+  description: { type: String, required: true },
+  images: { type: [String], required: true },
+  price: { type: Number, required: true },
+  quantity: { type: Number, required: true },
+  size: { type: String, required: true },
   total: { type: Number, required: true }
 })
 
 const PartialUserSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true },
-  shippingAddress: { type: String, required: true }
+  address: { type: String, required: true }
+})
+
+const PaymentSchema = new mongoose.Schema({
+  method: { type: String, required: true },
+  status: { type: String, required: true },
+  total: { type: Number, required: true }
 })
 
 const OrderSchema = new mongoose.Schema({
@@ -31,14 +36,24 @@ const OrderSchema = new mongoose.Schema({
     }
   },
   user: {
-    type: [PartialUserSchema],
+    type: { PartialUserSchema },
     required: true,
     validate: {
       validator: function (userOptions) {
         return userOptions.length > 1
       }
     },
-    message: 'Order must have a username and email user'
+    message: 'Order must have a username, email and address of the user'
+  },
+  payment: {
+    type: { PaymentSchema },
+    required: true,
+    validate: {
+      validator: function (paymentOptions) {
+        return paymentOptions.length > 1
+      }
+    },
+    message: 'Order must have a payment method, status and total'
   }
 },
 { timestamps: true }
