@@ -23,7 +23,9 @@ const ProductSchema = new mongoose.Schema({
       },
       message: 'Product must have at least one variant'
     }
-  }
+  },
+  trending: { type: Boolean, default: false },
+  active: { type: Boolean, default: true }
 },
 { timestamps: true }
 )
