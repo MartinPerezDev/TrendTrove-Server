@@ -8,7 +8,7 @@ class OrdersController extends BaseController {
 
   getByEmail = async (req, res) => {
     try {
-      const email = req.email
+      const { email } = req.params
       const orders = await this.dao.getByEmail(email)
       orders.length
         ? this.handleResponse(res, 200, `get ${this.nameDao} by email`, orders)
