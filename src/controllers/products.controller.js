@@ -10,7 +10,7 @@ class ProductsController extends BaseController {
     try {
       const { category } = req.params
       const products = await this.dao.getByCategory(category)
-      products.lenght
+      products.length
         ? this.handleResponse(res, 200, `get ${this.nameDao} by category`, products)
         : this.handleResponse(res, 404, `${this.nameDao} by category not found`)
     } catch (error) {
