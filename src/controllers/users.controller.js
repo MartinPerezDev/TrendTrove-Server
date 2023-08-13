@@ -31,7 +31,7 @@ class UserController {
       let user = await this.dao.getByEmail(email)
       if (!user) return this.handleResponse(res, 404, 'User not found')
       if (!passwordIsValid(user, password)) return this.handleResponse(res, 401, 'Invalid password')
-      const payload = { id: user._id, name: user.name, email: user.email, isAdmin: user.isAdmin }
+      const payload = { id: user._id, name: user.name, email: user.email, isAdmin: user.isAdmin, wishlist: user.wishlist }
       const token = generateToken(payload, process.env.JWT_SECRET_KEY)
       user = { ...payload, token }
       this.handleResponse(res, 200, 'User logged', user)
