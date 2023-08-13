@@ -52,10 +52,10 @@ class UserController {
 
   addProductInWishList = async (req, res) => {
     try {
-      const user = req.user
-      const { product } = req.body
-      const res = await this.dao.addProductWishList(user, product)
-      this.handleResponse(res, 201, 'Product added in wish list', user)
+      const userId = req.user.id
+      const product = req.body
+      await this.dao.addProductWishList(userId, product)
+      this.handleResponse(res, 201, 'Product added in wish list')
     } catch (error) {
       this.handleResponse(res, 500, error.message)
     }

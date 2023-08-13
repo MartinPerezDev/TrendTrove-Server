@@ -32,9 +32,9 @@ class UserDAO {
     }
   }
 
-  async addProductWishList (user, product) {
+  async addProductWishList (userId, product) {
     try {
-      return await this.schema.findByIdAndUpdate(user._id, { $push: { wishlist: product } })
+      return await this.schema.findByIdAndUpdate(userId, { $push: { wishlist: product } })
     } catch (error) {
       throw new Error(`Error adding product in ${this.nameSchema} wish list - ${error.message}`)
     }
