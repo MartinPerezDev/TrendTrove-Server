@@ -31,6 +31,14 @@ class UserDAO {
       throw new Error(`Error adding ${this.nameSchema} - ${error.message}`)
     }
   }
+
+  async addProductWishList (user, product) {
+    try{
+      return await this.schema.findByIdAndUpdate(user._id, { $push: { wishlist: product }  })
+    }catch(error){
+      throw new Error(`Error adding product in ${this.nameSchema} wish list - ${error.message}`)
+    }
+  }
 }
 
 module.exports = UserDAO
