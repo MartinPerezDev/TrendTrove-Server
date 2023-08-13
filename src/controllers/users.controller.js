@@ -49,6 +49,17 @@ class UserController {
       this.handleResponse(res, 500, error.message)
     }
   }
+
+  addProductInWishList = async (req, res) => {
+    try {
+      const user = req.user
+      const { product } = req.params
+      const res = await this.dao.addProductWishList(user, product)
+      this.handleResponse(res, 201, 'Product added in wish list', user)
+    } catch (error) {
+      this.handleResponse(res, 500, error.message)
+    }
+  }
 }
 
 module.exports = UserController
