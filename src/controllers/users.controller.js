@@ -42,8 +42,10 @@ class UserController {
 
   getUserByToken = async (req, res) => {
     try {
-      const user = req.user
+      let user = req.user
       if (!user) return this.handleResponse(res, 404, 'User not found')
+      const dataUser = await this.dao.getByEmail(user.email)
+      user = { ...user, wishlist: dataUser.wishlist }
       this.handleResponse(res, 200, 'User found', user)
     } catch (error) {
       this.handleResponse(res, 500, error.message)
