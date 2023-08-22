@@ -62,6 +62,16 @@ class UserController {
       this.handleResponse(res, 500, error.message)
     }
   }
+
+  getWishListById = async (req, res) => {
+    try {
+      const userId = req.user.id
+      const wishlist = await this.dao.getWishList(userId)
+      this.handleResponse(res, 200, 'Wishlist found', wishlist)
+    } catch (error) {
+      this.handleResponse(res, 500, error.message)
+    }
+  }
 }
 
 module.exports = UserController
