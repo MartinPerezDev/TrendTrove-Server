@@ -39,6 +39,15 @@ class UserDAO {
       throw new Error(`Error adding product in ${this.nameSchema} wish list - ${error.message}`)
     }
   }
+
+  async getWishList (userId) {
+    try {
+      const data = await this.schema.findById(userId)
+      return data.wishlist
+    } catch (error) {
+      throw new Error(`Error getting wishlist in ${this.nameSchema} - ${error.message}`)
+    }
+  }
 }
 
 module.exports = UserDAO
