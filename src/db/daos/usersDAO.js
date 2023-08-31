@@ -40,6 +40,14 @@ class UserDAO {
     }
   }
 
+  async deleteProductWishList (userId, productId) {
+    try {
+      return await this.schema.findByIdAndUpdate(userId, { $pull: { wishlist: { _id: productId } } })
+    } catch (error) {
+      throw new Error(`Error deleting product in ${this.nameSchema} wish list - ${error.message}`)
+    }
+  }
+
   async getWishList (userId) {
     try {
       const data = await this.schema.findById(userId)
