@@ -63,6 +63,17 @@ class UserController {
     }
   }
 
+  deleteProductInWishList = async (req, res) => {
+    try {
+      const userId = req.user.id
+      const product = req.body
+      await this.dao.deleteProductWishList(userId, product._id)
+      this.handleResponse(res, 200, 'Product deleted in wish list')
+    } catch (error) {
+      this.handleResponse(res, 500, error.message)
+    }
+  }
+
   getWishListById = async (req, res) => {
     try {
       const userId = req.user.id
